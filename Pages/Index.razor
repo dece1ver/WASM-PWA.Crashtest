@@ -1,0 +1,266 @@
+﻿@page "/"
+@using WASM_PWA.Crashtest.Infrastructure.Tools
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<select style="width: 400px" @onchange="@SelectTool">
+    <option value=0>Select tool</option>
+    @for (int i = 0; i < Tools.Count; i++)
+   {
+       <option value="@i">@Tools[i].Description()</option>
+   }
+</select>
+
+<p>@($"{(SelectedTool is null ? "Tool is not selected" : $"Selected tool is: {SelectedTool.Description()}")}")</p>
+
+<button @onclick="@(() => Tools.Add(new SpecialTool(0101, "UPOR")))">Add Special Tool</button>
+
+@code{
+    public Tool SelectedTool { get; set; }
+
+    public List<Tool> Tools { get; set; } = new();
+
+    #region Tools
+    public List<TurningExternalTool> TurningExternalTools
+    {
+        get
+        {
+            List<TurningExternalTool> result = new();
+            foreach (var item in Tools.Where(x => x is TurningExternalTool))
+            {
+                result.Add(item as TurningExternalTool);
+            }
+            return result ?? new();
+        }
+        set 
+        {
+            Tools.RemoveAll(x => x is TurningExternalTool);
+            Tools.AddRange(value);
+        }
+    }
+
+    public List<TurningInternalTool> TurningInternalTools
+    {
+        get
+        {
+            List<TurningInternalTool> result = new();
+            foreach (var item in Tools.Where(x => x is TurningInternalTool))
+            {
+                result.Add(item as TurningInternalTool);
+            }
+            return result ?? new();
+        }
+        set 
+        {
+            Tools.RemoveAll(x => x is TurningInternalTool);
+            Tools.AddRange(value);
+        }
+    }
+
+    public List<GroovingExternalTool> GroovingExternalTools
+    {
+        get
+        {
+            List<GroovingExternalTool> result = new();
+            foreach (var item in Tools.Where(x => x is GroovingExternalTool))
+            {
+                result.Add(item as GroovingExternalTool);
+            }
+            return result ?? new();
+        }
+        set 
+        {
+            Tools.RemoveAll(x => x is GroovingExternalTool);
+            Tools.AddRange(value);
+        }
+    }
+
+    public List<GroovingInternalTool> GroovingInternalTools
+    {
+        get
+        {
+            List<GroovingInternalTool> result = new();
+            foreach (var item in Tools.Where(x => x is GroovingInternalTool))
+            {
+                result.Add(item as GroovingInternalTool);
+            }
+            return result ?? new();
+        }
+        set 
+        {
+            Tools.RemoveAll(x => x is GroovingInternalTool);
+            Tools.AddRange(value);
+        }
+    }
+
+    public List<ThreadingExternalTool> ThreadingExternalTools
+    {
+        get
+        {
+            List<ThreadingExternalTool> result = new();
+            foreach (var item in Tools.Where(x => x is ThreadingExternalTool))
+            {
+                result.Add(item as ThreadingExternalTool);
+            }
+            return result ?? new();
+        }
+        set 
+        {
+            Tools.RemoveAll(x => x is ThreadingExternalTool);
+            Tools.AddRange(value);
+        }
+    }
+
+    public List<ThreadingInternalTool> ThreadingInternalTools
+    {
+        get
+        {
+            List<ThreadingInternalTool> result = new();
+            foreach (var item in Tools.Where(x => x is ThreadingInternalTool))
+            {
+                result.Add(item as ThreadingInternalTool);
+            }
+            return result ?? new();
+        }
+        set 
+        {
+            Tools.RemoveAll(x => x is ThreadingInternalTool);
+            Tools.AddRange(value);
+        }
+    }
+
+
+
+    public List<DrillingTool> DrillingTools
+    {
+        get
+        {
+            List<DrillingTool> result = new();
+            foreach (var item in Tools.Where(x => x is DrillingTool))
+            {
+                result.Add(item as DrillingTool);
+            }
+            return result ?? new();
+        }
+        set 
+        {
+            Tools.RemoveAll(x => x is DrillingTool);
+            Tools.AddRange(value);
+        }
+    }
+
+    public List<TappingTool> TappingTools
+    {
+        get
+        {
+            List<TappingTool> result = new();
+            foreach (var item in Tools.Where(x => x is TappingTool))
+            {
+                result.Add(item as TappingTool);
+            }
+            return result ?? new();
+        }
+        set 
+        {
+            Tools.RemoveAll(x => x is TappingTool);
+            Tools.AddRange(value);
+        }
+    }
+
+    public List<SpecialTool> SpecialTools
+    {
+        get
+        {
+            List<SpecialTool> result = new();
+            foreach (var item in Tools.Where(x => x is SpecialTool))
+            {
+                result.Add(item as SpecialTool);
+            }
+            return result ?? new();
+        }
+        set 
+        {
+            Tools.RemoveAll(x => x is SpecialTool);
+            Tools.AddRange(value);
+        }
+    }
+    #endregion
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        #region Инициализация спец инструмента
+        if (SpecialTools is null || SpecialTools.Count == 0)
+        {
+            //Tools.Add(new SpecialTool(0101, "UPOR"));
+        }
+        #endregion
+
+        #region Инициализация токарного инструмента
+        if (TurningExternalTools is null || TurningExternalTools.Count == 0)
+        {
+            Tools.Add(new TurningExternalTool(0202, TurningExternalTool.Types.Bar, 55, 0.8));
+            Tools.Add(new TurningExternalTool(0202, TurningExternalTool.Types.Face, 100, 0.8));
+            Tools.Add(new TurningExternalTool(0303, TurningExternalTool.Types.Bar, 35, 0.4));
+        }
+        if (TurningInternalTools is null || TurningInternalTools.Count == 0)
+        {
+            Tools.Add(new TurningInternalTool(0202, 25, 55, 0.8));
+            Tools.Add(new TurningInternalTool(0202, 32, 80, 0.8));
+            Tools.Add(new TurningInternalTool(0303, 10, 55, 0.4));
+        }
+        Tools.AddRange(TurningInternalTools);
+        #endregion
+
+        #region Инициализация канавочного и отрезного инструмента
+        if (GroovingExternalTools is null || GroovingExternalTools.Count == 0)
+        {
+            Tools.Add(new GroovingExternalTool(1212, GroovingExternalTool.Types.Grooving, 3, GroovingExternalTool.Point.Left));
+            Tools.Add(new GroovingExternalTool(1212, GroovingExternalTool.Types.Cutting, 3, GroovingExternalTool.Point.Right));
+        }
+
+        if (GroovingInternalTools is null || GroovingInternalTools.Count == 0)
+        {
+            Tools.Add(new GroovingInternalTool(1212, 20, 3, GroovingInternalTool.Point.Right));
+            Tools.Add(new GroovingInternalTool(1212, 40, 4, GroovingInternalTool.Point.Right));
+        }
+        #endregion
+
+        #region Инициализация резьбового инструмента
+        if (ThreadingExternalTools is null || TurningExternalTools.Count == 0)
+        {
+            Tools.Add(new ThreadingExternalTool(1111, 1.5, 1));
+        }
+
+        if (ThreadingInternalTools is null || ThreadingInternalTools.Count == 0)
+        {
+            Tools.Add(new ThreadingInternalTool(1111, 16, 1.5, 1));
+        }
+        #endregion
+
+        #region Инициализация сверел
+        if (DrillingTools is null || DrillingTools.Count == 0)
+        {
+            Tools.Add(new DrillingTool(0505, DrillingTool.Types.HSS, 5, 120));
+            Tools.Add(new DrillingTool(0707, DrillingTool.Types.Solid, 10, 140));
+            Tools.Add(new DrillingTool(0606, DrillingTool.Types.Insert, 25, 180));
+        }
+        #endregion
+
+        #region Инициализация метчиков
+        if (TappingTools is null || TappingTools.Count == 0)
+        {
+            Tools.Add(new TappingTool(0909, TappingTool.Types.Cutting, 12, 1.75));
+            Tools.Add(new TappingTool(0808, TappingTool.Types.Forming, 10, 1.5));
+        }
+        #endregion
+    }
+    void SelectTool(ChangeEventArgs e)
+    {
+        int index = int.Parse(e.Value.ToString());
+        SelectedTool = Tools[index];
+    }
+
+}
