@@ -10,28 +10,6 @@ namespace WASM_PWA.Crashtest.Infrastructure
             return value.ToString($"D{4}");
         }
 
-        public static string NC(this double value, int precision = 3)
-        {
-            return value.ToString($"F{precision}", CultureInfo.InvariantCulture).Contains('.')
-                ? value.ToString($"F{precision}", CultureInfo.InvariantCulture).TrimEnd('0')
-                : value.ToString($"F{precision}");
-        }
-
-        public static double Radians(this double degrees)
-        {
-            return degrees * Math.PI / 180;
-        }
-
-        public static double Radians(this int degrees)
-        {
-            return degrees * Math.PI / 180;
-        }
-
-        public static double Degrees(this double radians)
-        {
-            return radians * 180 / Math.PI;
-        }
-
         public enum ToolDescriptionOption { General, L230, GoodwayLeft, GoodwayRight }
         public static string Description(this Tool tool, ToolDescriptionOption option = ToolDescriptionOption.General)
         {
